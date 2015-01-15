@@ -1,8 +1,14 @@
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
+import urllib.error
+import urllib.parse
+
 
 class RequestService():
-    def __init__(self):
-        pass
 
-    def getcode(url):
-        return urllib.request.urlopen(url).getcode()
+    def getcode(self, url):
+        try:
+            return urllib.request.urlopen(url).getcode()
+        except urllib.error.HTTPError as e:
+            return e.code
+        except urllib.error.URLError as e:
+            return e.args

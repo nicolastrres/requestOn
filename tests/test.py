@@ -1,12 +1,18 @@
 import unittest
 from checkit.request_service import RequestService
 
+
 class RequestServiceTest(unittest.TestCase):
+    def setUp(self):
+        self.request = RequestService()
+
     def test_service_available(self):
-        request = RequestService
-        response = RequestService.getcode('http://www.google.com')
+        response = self.request.getcode("http://www.google.com")
         self.assertEqual(response, 200)
 
+    def test_not_found(self):
+        response = self.request.getcode('http://www.github.com/sdksdjflskjflskjflsdkjflskdjfsfds')
+        self.assertEqual(response, 404)
 
 if __name__ == '__main__':
     unittest.main()
