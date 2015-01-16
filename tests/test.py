@@ -1,5 +1,5 @@
 import unittest
-from checkit.request_service import RequestService
+from CHECKIT.request_service import RequestService
 
 
 class RequestServiceTest(unittest.TestCase):
