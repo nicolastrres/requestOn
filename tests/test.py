@@ -1,8 +1,14 @@
 import unittest
 import sys
 import os.path
+import inspect
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+__file__ = os.path.abspath(inspect.getsourcefile(lambda _: None))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+sys.path.insert(0, ROOT_DIR)
+
 from CHECKIT.request_service import RequestService
 
 class RequestServiceTest(unittest.TestCase):
