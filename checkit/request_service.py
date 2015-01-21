@@ -2,9 +2,9 @@ import urllib.request
 import urllib.error
 import urllib.parse
 from optparse import OptionParser
-[...]
+
 parser = OptionParser()
-parser.add_option("r", "--request", dest="getcode",
+parser.add_option("-r", "--request", dest="getcode",
                   help="send a request to a website", metavar="REQUEST")
 parser.add_option("-q", "--quiet",
                   action="store_false", dest="verbose", default=True,
@@ -21,3 +21,6 @@ class RequestService():
             return e.code
         except urllib.error.URLError as e:
             return e.args
+
+if __name__ == "__main__":
+    request_service = RequestService()
