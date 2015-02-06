@@ -1,13 +1,21 @@
 import argparse
+from CHECKIT.request_service import RequestService
 
-def parse_args(req_args=None):
+
+def parse_args():
     parser = argparse.ArgumentParser(prog="Checkit")
     group_request = parser.add_argument_group("Request options")
-    group_request.add_argument("-r", "--request", action="store", type="string", destination="request_url")
+    group_request.add_argument("-r", "--request", action="store", dest="request_url", help="Do a request to an specific url")
+    args = parser.parse_args()
 
-    args = parser.parse_args(req_args)
     return args
 
 
-def main(req_args=None):
-    args = parse_args(req_args)
+def main():
+    args = parse_args()
+    if args.request_url:
+        RequestService.getcode(args.request_url)
+
+if __name__ == "__main__":
+    main()
+
