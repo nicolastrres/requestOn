@@ -12,6 +12,3 @@ class RequestService():
             return e.code
         except urllib.error.URLError as e:
             return e.args
-
-if __name__ == "__main__":
-    request_service = RequestService()
