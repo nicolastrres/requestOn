@@ -1,5 +1,5 @@
 import argparse
-from CHECKIT.request_service import RequestService
+from request_service import RequestService
 
 
 def parse_args():
@@ -12,9 +12,10 @@ def parse_args():
 
 
 def main():
+    requestService = RequestService()
     args = parse_args()
     if args.request_url:
-        RequestService.getcode(args.request_url)
+        requestService.getcode(url=args.request_url)
 
 if __name__ == "__main__":
     main()
