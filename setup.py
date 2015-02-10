@@ -14,7 +14,7 @@ config = {
     'install_requires': 'requirements',
     # 'packages': ['NAME'],
     # 'scripts': [],
-    'name': 'CHECKIT'
+    'name': 'checkit'
 }
 
 setup(**config)

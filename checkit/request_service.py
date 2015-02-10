@@ -1,7 +1,7 @@
 import urllib.request
 import urllib.error
 import urllib.parse
-from CHECKIT.logs import Logs
+from checkit.logs import Logs
 
 
 class RequestService():
