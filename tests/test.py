@@ -7,6 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from checkit.request_service import RequestService
 
+
 class RequestServiceTest(unittest.TestCase):
     def setUp(self):
         self.request = RequestService()

@@ -1,9 +1,7 @@
 #!/bin/bash
-FILES=/path/to/*
-for f in $FILES
-do
 
-  echo "Processing $f file..."
-  # take action on each file. $f store current file name
-  cat $f
-done
+echo '---------------------------Running PEP8---------------------------'
+for f in $(find ../checkit -name '*.py' -or -name '*.doc'); do pep8 $f; done
+echo '------------------------------------------------------------------'
+echo '---------------------------Running Tests--------------------------'
+python3 tests/test.py
