@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/roselmamendes/checkit.svg?branch=master)](https://travis-ci.org/roselmamendes/checkit)
+
 # Checkit
 
 #### Create and manage app's services requests with python
