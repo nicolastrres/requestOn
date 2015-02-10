@@ -5,7 +5,7 @@ import inspect
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from CHECKIT.request_service import RequestService
+from checkit.request_service import RequestService
 
 
 
