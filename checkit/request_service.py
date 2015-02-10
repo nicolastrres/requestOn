@@ -1,11 +1,10 @@
 import urllib.request
 import urllib.error
 import urllib.parse
-from checkit.logs import Logs
+from CHECKIT.logs import Logs
 
 
 class RequestService():
-    
     def getcode(self, url):
         try:
             Logs.info(url)
