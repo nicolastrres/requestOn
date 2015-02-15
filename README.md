@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/roselmamendes/checkit.svg?branch=master)](https://travis-ci.org/roselmamendes/checkit)
-
 # Checkit
 #### Create and manage app's services requests with python
 Checkit is a python open source software that allow check the availability of services. It uses [dashy](https://github.com/thoughtworks.com/dashy) as dashboard to show the status of the service.
