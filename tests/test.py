@@ -14,19 +14,19 @@ class RequestServiceTest(unittest.TestCase):
 
     @patch('checkit.logs.logging')
     def test_valid_url(self, mock_logging):
-        response = self.request.getcode("http://www.google.com")
+        response = self.request.get_code("http://www.google.com")
         self.assertTrue(mock_logging.info.called)
         self.assertEqual(response, 200)
 
     @patch('checkit.logs.logging')
     def test_not_found(self, mock_logging):
-        response = self.request.getcode('http://www.github.com/sdksdjflskjflskjflsdkjflskdjfsfds')
+        response = self.request.get_code('http://www.github.com/sdksdjflskjflskjflsdkjflskdjfsfds')
         self.assertTrue(mock_logging.error.called)
         self.assertEqual(response, 404)
 
     @patch('checkit.logs.logging')
     def test_invalid_url(self, mock_logging):
-        response = self.request.getcode('test')
+        response = self.request.get_code('test')
         self.assertTrue(mock_logging.error.called)
         self.assertEqual(response[0], "unknown url type: 'test'")
 

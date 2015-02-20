@@ -16,7 +16,7 @@ def main():
     requestService = RequestService()
     args = parse_args()
     if args.request_url:
-        requestService.getcode(url=args.request_url)
+        requestService.get_code(url=args.request_url)
 
 
 if __name__ == "__main__":
