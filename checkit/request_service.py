@@ -1,14 +1,19 @@
 import urllib.request
 import urllib.error
 import urllib.parse
+import sys
+import os.path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 from checkit.logs import Logs
 
 
 class RequestService():
-    def getcode(self, url):
+    def get_code(self, url):
         try:
-            Logs.info(url)
-            return urllib.request.urlopen(url).getcode()
+            code = urllib.request.urlopen(url).getcode()
+            Logs.info(url + " --- code response:" + str(code))
+            return code
         except urllib.error.HTTPError as e:
             Logs.error_status_code(e.code)
             return e.code
