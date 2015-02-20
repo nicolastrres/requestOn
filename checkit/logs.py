@@ -3,19 +3,20 @@ import logging
 
 class Logs():
     logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
 
     @staticmethod
     def info(message):
-        logging.info("Calling endpoint: " + message)
+        Logs.logger.info('Calling endpoint: ' + message)
 
     @staticmethod
     def error_status_code(status_code):
-        logging.error("Error %s" % status_code)
+        Logs.logger.error('Error %s' % status_code)
 
     @staticmethod
     def general_error(message):
-        logging.error("Undefined Error: " + message)
+        Logs.logger.error('Undefined Error: ' + message)
 
     @staticmethod
     def extra_info(message):
-        logging.info("Extra information: " + message)
+        Logs.logger.info('Extra information: ' + message)
