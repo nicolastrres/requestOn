@@ -55,6 +55,6 @@ class RequestService():
                 responses.append(ResponseEndpoint(0, ''))
             except ValueError as e:
                 Logs.general_error("".join(e.args))
-                responses.append(ResponseEndpoint(0, ''))
+                responses.append(ResponseEndpoint(0, e.args))
 
         return responses

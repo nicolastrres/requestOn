@@ -29,38 +29,23 @@ class RequestServiceTest(unittest.TestCase):
     def expectedEndpoints(self):
         return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
 
-    @patch('checkit.logs.Logs.logger')
-    def test_valid_url(self, mock_logging):
-        response = self.request.get_code('http://www.google.com')
-        self.assertTrue(mock_logging.info.called)
-        self.assertEqual(response, 200)
-
-    @patch('checkit.logs.Logs.logger')
-    def test_not_found(self, mock_logging):
-        response = self.request.get_code('http://www.github.com/sdksdjflskjflskjflsdkjflskdjfsfds')
-        self.assertTrue(mock_logging.error.called)
-        self.assertEqual(response, 404)
-
-    @patch('checkit.logs.Logs.logger')
-    def test_invalid_url(self, mock_logging):
-        response = self.request.get_code('test')
-        self.assertTrue(mock_logging.error.called)
-        self.assertEqual(response[0], "unknown url type: 'test'")
-
     def test_should_add_a_endpoint_list(self):
         expected_endpoints = self.expectedEndpoints()
         self.request.addEndpoints(expected_endpoints)
         actual_endpoints = self.request.getEndpointList()
         self.assertEqual(expected_endpoints, actual_endpoints)
 
-    def test_call_a_endpoint_list(self):
+    @patch('checkit.logs.Logs.logger')
+    def test_call_a_endpoint_list(self, mock_logging):
         self.request.addEndpoints(self.expectedEndpoints())
         actual_responses = self.request.start()
         self.assertEqual(200, actual_responses[0].code)
         self.assertEqual(200, actual_responses[1].code)
         self.assertEqual(200, actual_responses[2].code)
+        self.assertTrue(mock_logging.info.called)
 
-    def test_call_a_endpoint_list_with_broken_url(self):
+    @patch('checkit.logs.Logs.logger')
+    def test_call_a_endpoint_list_with_broken_url(self, mock_logging):
         endpoints = self.expectedEndpoints()
         endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
         self.request.addEndpoints(endpoints)
@@ -68,14 +53,27 @@ class RequestServiceTest(unittest.TestCase):
         self.assertEqual(200, actual_responses[0].code)
         self.assertEqual(404, actual_responses[1].code)
         self.assertEqual(200, actual_responses[2].code)
+        self.assertTrue(mock_logging.info.called)
+        self.assertTrue(mock_logging.error.called)
 
-    def test_call_a_endpoint_list_and_retrieve_data(self):
+    @patch('checkit.logs.Logs.logger')
+    def test_should_treat_correctly_when_a_invalid_url_is_passed(self, mock_logging):
+        self.request.addEndpoint('test')
+        actual_responses = self.request.start()
+        expected_response_endpoint = ResponseEndpoint(0, '')
+        self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
+        self.assertEqual("unknown url type: 'test'", actual_responses[0].data[0])
+        self.assertTrue(mock_logging.error.called)
+
+    @patch('checkit.logs.Logs.logger')
+    def test_call_a_endpoint_list_and_retrieve_data(self, mock_logging):
         self.request.addEndpoint('http://www.google.com')
         actual_responses = self.request.start()
         expected_response_endpoint = ResponseEndpoint(200, '')
         # compare(expected_response_endpoint, actual_responses[0])
         self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
         self.assertEqual(expected_response_endpoint.data, actual_responses[0].data)
+        self.assertTrue(mock_logging.info.called)
 
 
 class LogsTest(unittest.TestCase):
