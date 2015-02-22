@@ -11,7 +11,11 @@ from checkit.logs import Logs
 
 class RequestServiceTest(unittest.TestCase):
     def setUp(self):
-        self.request = RequestService()
+        api_name = 'API Name'
+        self.request = RequestService(api_name)
+
+    def expectedEndpoints(self):
+        return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
 
     @patch('checkit.logs.Logs.logger')
     def test_valid_url(self, mock_logging):
@@ -31,6 +35,24 @@ class RequestServiceTest(unittest.TestCase):
         self.assertTrue(mock_logging.error.called)
         self.assertEqual(response[0], "unknown url type: 'test'")
 
+    def test_should_add_a_endpoint_list(self):
+        expected_endpoints = self.expectedEndpoints()
+        self.request.addEndpoints(expected_endpoints)
+        actual_endpoints = self.request.getEndpointList()
+        self.assertEqual(expected_endpoints, actual_endpoints)
+
+    def test_call_a_endpoint_list(self):
+        self.request.addEndpoints(self.expectedEndpoints())
+        actual_responses = self.request.start()
+        self.assertEqual([200, 200, 200], actual_responses)
+
+    def test_call_a_endpoint_list_with_broken_url(self):
+        endpoints = self.expectedEndpoints()
+        endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
+        self.request.addEndpoints(endpoints)
+        actual_responses = self.request.start()
+        self.assertEqual([200, 404, 200], actual_responses)
+
 
 class LogsTest(unittest.TestCase):
     @patch('checkit.logs.Logs.logger')
@@ -49,7 +71,7 @@ class LogsTest(unittest.TestCase):
     def test_general_error_log(self, mock_logging):
         Logs.general_error('Crazy error')
         self.assertTrue(mock_logging.error.called)
-        mock_logging.error.assert_called_once_with('Undefined Error: Crazy error')
+        mock_logging.error.assert_called_once_with('Crazy error')
 
     @patch('checkit.logs.Logs.logger')
     def test_extra_info_log(self, mock_logging):
