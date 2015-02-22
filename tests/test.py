@@ -5,8 +5,20 @@ from unittest.mock import patch
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
+from checkit.response_endpoint import ResponseEndpoint
 from checkit.request_service import RequestService
 from checkit.logs import Logs
+
+# from testfixtures.comparison import register
+# from testfixtures import compare
+#
+# def compare_response_endpoint_objects(self, obj1, obj2):
+#         if obj1.code == obj2.code and obj1.data == obj2.data:
+#             return
+#
+#         return 'Obj1 different of Obj2'
+#
+# register(ResponseEndpoint, compare_response_endpoint_objects)
 
 
 class RequestServiceTest(unittest.TestCase):
@@ -44,15 +56,26 @@ class RequestServiceTest(unittest.TestCase):
     def test_call_a_endpoint_list(self):
         self.request.addEndpoints(self.expectedEndpoints())
         actual_responses = self.request.start()
-        self.assertEqual([200, 200, 200], actual_responses)
+        self.assertEqual(200, actual_responses[0].code)
+        self.assertEqual(200, actual_responses[1].code)
+        self.assertEqual(200, actual_responses[2].code)
 
     def test_call_a_endpoint_list_with_broken_url(self):
         endpoints = self.expectedEndpoints()
         endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
         self.request.addEndpoints(endpoints)
         actual_responses = self.request.start()
-        self.assertEqual([200, 404, 200], actual_responses)
+        self.assertEqual(200, actual_responses[0].code)
+        self.assertEqual(404, actual_responses[1].code)
+        self.assertEqual(200, actual_responses[2].code)
 
+    def test_call_a_endpoint_list_and_retrieve_data(self):
+        self.request.addEndpoint('http://www.google.com')
+        actual_responses = self.request.start()
+        expected_response_endpoint = ResponseEndpoint(200, '')
+        #compare(expected_response_endpoint, actual_responses[0])
+        self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
+        self.assertEqual(expected_response_endpoint.data, actual_responses[0].data)
 
 class LogsTest(unittest.TestCase):
     @patch('checkit.logs.Logs.logger')
