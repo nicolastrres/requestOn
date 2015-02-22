@@ -15,7 +15,7 @@ class Logs():
 
     @staticmethod
     def general_error(message):
-        Logs.logger.error(message)
+        Logs.logger.error('Undefined Error: ' + message)
 
     @staticmethod
     def extra_info(message):

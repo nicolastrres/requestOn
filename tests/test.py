@@ -93,7 +93,7 @@ class LogsTest(unittest.TestCase):
     def test_general_error_log(self, mock_logging):
         Logs.general_error('Crazy error')
         self.assertTrue(mock_logging.error.called)
-        mock_logging.error.assert_called_once_with('Crazy error')
+        mock_logging.error.assert_called_once_with('Undefined Error: Crazy error')
 
     @patch('checkit.logs.Logs.logger')
     def test_extra_info_log(self, mock_logging):
