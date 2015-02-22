@@ -73,9 +73,10 @@ class RequestServiceTest(unittest.TestCase):
         self.request.addEndpoint('http://www.google.com')
         actual_responses = self.request.start()
         expected_response_endpoint = ResponseEndpoint(200, '')
-        #compare(expected_response_endpoint, actual_responses[0])
+        # compare(expected_response_endpoint, actual_responses[0])
         self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
         self.assertEqual(expected_response_endpoint.data, actual_responses[0].data)
+
 
 class LogsTest(unittest.TestCase):
     @patch('checkit.logs.Logs.logger')
