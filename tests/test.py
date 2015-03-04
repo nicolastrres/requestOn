@@ -57,5 +57,11 @@ class LogsTest(unittest.TestCase):
         self.assertTrue(mock_logging.info.called)
         mock_logging.info.assert_called_once_with('Extra information: Crazy extra info')
 
+    @patch('checkit.logs.Logs.logger')
+    def test_write_file(self, mock_logging):
+        Logs.write_file('test_log_file.txt')
+        self.assertTrue(mock_logging.basicConfig.called)
+        mock_logging.basicConfig.assert_called_once_with(filename='test_log_file.txt')
+
 if __name__ == '__main__':
     unittest.main()
