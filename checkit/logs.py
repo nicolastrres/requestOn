@@ -7,22 +7,16 @@ class Logs():
         self.logger.setLevel(logging.DEBUG)
 
     def write_file(self, filename):
-        fh = logging.FileHandler(filename)
-        fh.setLevel(logging.DEBUG)
-        self.logger.addHandler(fh)
+        self.logger.addHandler(logging.FileHandler(filename))
 
     def info(self, message):
-        print(message)
         self.logger.info('Calling endpoint: ' + message)
-        print(self.logger.handlers)
 
     def error_status_code(self, status_code):
         self.logger.error('Error %s' % status_code)
 
-    @staticmethod
     def general_error(self, message):
         self.logger.error('Undefined Error: ' + message)
 
-    @staticmethod
     def extra_info(self, message):
         self.logger.info('Extra information: ' + message)

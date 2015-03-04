@@ -20,5 +20,5 @@ class RequestService():
             logs.general_error(e.reason)
             return e.reason
         except ValueError as e:
-            logs.general_error("".join(e.args))
+            logs.general_error(message="".join(e.args))
             return e.args
