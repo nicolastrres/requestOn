@@ -5,26 +5,13 @@ from unittest.mock import patch
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from checkit.response_endpoint import ResponseEndpoint
 from checkit.request_service import RequestService
 from checkit.logs import Logs
-
-# from testfixtures.comparison import register
-# from testfixtures import compare
-#
-# def compare_response_endpoint_objects(self, obj1, obj2):
-#         if obj1.code == obj2.code and obj1.data == obj2.data:
-#             return
-#
-#         return 'Obj1 different of Obj2'
-#
-# register(ResponseEndpoint, compare_response_endpoint_objects)
 
 
 class RequestServiceTest(unittest.TestCase):
     def setUp(self):
-        api_name = 'API Name'
-        self.request = RequestService(api_name)
+        self.request = RequestService('API Name')
 
     def expectedEndpoints(self):
         return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
@@ -60,7 +47,7 @@ class RequestServiceTest(unittest.TestCase):
     def test_should_treat_correctly_when_a_invalid_url_is_passed(self, mock_logging):
         self.request.addEndpoint('test')
         actual_responses = self.request.start()
-        expected_response_endpoint = ResponseEndpoint(0, '')
+        expected_response_endpoint = 0
         self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
         self.assertEqual("unknown url type: 'test'", actual_responses[0].data[0])
         self.assertTrue(mock_logging.error.called)
@@ -69,7 +56,7 @@ class RequestServiceTest(unittest.TestCase):
     def test_call_a_endpoint_list_and_retrieve_data(self, mock_logging):
         self.request.addEndpoint('http://www.google.com')
         actual_responses = self.request.start()
-        expected_response_endpoint = ResponseEndpoint(200, '')
+        expected_response_endpoint = 200
         # compare(expected_response_endpoint, actual_responses[0])
         self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
         self.assertEqual(expected_response_endpoint.data, actual_responses[0].data)
