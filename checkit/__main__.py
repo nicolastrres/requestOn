@@ -3,6 +3,7 @@ import sys
 from request_service import RequestService
 from logs import Logs
 
+
 def usage():
     print("\t\t\t Checkit\n\n")
     print("Usage: checkit -r target [-l log_file_name]")
@@ -11,6 +12,7 @@ def usage():
     print("\n\nExamples:\n checkit -t http://www.google.com")
     print(" checkit -t http://www.facebook.com -l logs.txt")
     sys.exit(0)
+
 
 def parse_args():
     parser = argparse.ArgumentParser(prog="Checkit")
