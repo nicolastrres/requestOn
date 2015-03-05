@@ -3,22 +3,41 @@ import urllib.error
 import urllib.parse
 import sys
 import os.path
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 class RequestService():
 
-    def get_code(self, url, logs):
-        try:
-            code = urllib.request.urlopen(url).getcode()
-            logs.info(url + " --- code response:" + str(code))
-            return code
-        except urllib.error.HTTPError as e:
-            logs.error_status_code(e.code)
-            return e.code
-        except urllib.error.URLError as e:
-            logs.general_error(e.reason)
-            return e.reason
-        except ValueError as e:
-            logs.general_error(message="".join(e.args))
-            return e.args
+    def __init__(self, api_name, logs):
+        self.api_name = api_name
+        self.endpoints = []
+        self.logs = logs
+
+    def addEndpoint(self, endpoint):
+        self.endpoints.append(endpoint)
+
+    def addEndpoints(self, endpointsList):
+        self.endpoints = endpointsList
+
+    def getEndpointList(self):
+        return self.endpoints
+
+    def start(self):
+        responses = []
+        for endpoint in self.endpoints:
+            try:
+                response_endpoint = urllib.request.urlopen(endpoint).getcode()
+                responses.append(response_endpoint)
+                self.logs.info(endpoint + " --- code response:" + str(response_endpoint))
+            except urllib.error.HTTPError as e:
+                self.logs.error_status_code(e.code)
+                responses.append(e.code)
+            except urllib.error.URLError as e:
+                self.logs.general_error(e.reason)
+                responses.append(0)
+            except ValueError as e:
+                self.logs.general_error("".join(e.args))
+                responses.append(0)
+
+        return responses

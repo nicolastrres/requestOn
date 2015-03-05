@@ -11,34 +11,55 @@ from checkit.logs import Logs
 
 
 class RequestServiceTest(unittest.TestCase):
-    def setUp(self):
-        self.request = RequestService()
-        self.log = Logs()
 
-    def test_valid_url(self):
-        url = 'http://www.google.com'
-        message = 'Calling endpoint: ' + url + " --- code response:" + str(200)
+    def setUp(self):
+        self.log = Logs()
+        self.request = RequestService(api_name='API Name', logs=self.log)
+
+    def expectedEndpoints(self):
+        return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
+
+    def test_should_add_a_endpoint_list(self):
+        expected_endpoints = self.expectedEndpoints()
+        self.request.addEndpoints(expected_endpoints)
+        actual_endpoints = self.request.getEndpointList()
+        self.assertEqual(expected_endpoints, actual_endpoints)
+
+    def test_call_a_endpoint_list(self):
+        self.request.addEndpoints(self.expectedEndpoints())
         self.log.logger.info = MagicMock()
 
-        response = self.request.get_code(url, self.log)
+        actual_responses = self.request.start()
 
-        self.log.logger.info.assert_called_with(message)
-        self.assertEqual(response, 200)
+        self.assertEqual(200, actual_responses[0])
+        self.assertEqual(200, actual_responses[1])
+        self.assertEqual(200, actual_responses[2])
+        self.assertTrue(self.log.logger.info.called)
 
-    def test_not_found(self):
+    def test_call_a_endpoint_list_with_broken_url(self):
+        endpoints = self.expectedEndpoints()
+        endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
+        self.request.addEndpoints(endpoints)
+        self.log.logger.info = MagicMock()
+        self.log.logger.error = MagicMock()
+        actual_responses = self.request.start()
+
+        self.assertEqual(200, actual_responses[0])
+        self.assertEqual(404, actual_responses[1])
+        self.assertEqual(200, actual_responses[2])
+
+        self.assertTrue(self.log.logger.info)
+        self.assertTrue(self.log.logger.error.called)
+
+    def test_should_treat_correctly_when_a_invalid_url_is_passed(self):
+        self.request.addEndpoint('test')
+        expected_response_endpoint = 0
         self.log.logger.error = MagicMock()
 
-        response = self.request.get_code('http://www.github.com/sdksdjflskjflskjflsdkjflskdjfsfds', self.log)
-        self.log.logger.error.assert_called_with('Error %s' % 404)
-        self.assertEqual(response, 404)
+        actual_responses = self.request.start()
 
-    def test_invalid_url(self):
-        self.log.logger.error = MagicMock()
-
-        response = self.request.get_code('test', self.log)
-
-        self.log.logger.error.assert_called_with('Undefined Error: ' + response[0])
-        self.assertEqual(response[0], "unknown url type: 'test'")
+        self.assertEqual(expected_response_endpoint, actual_responses[0])
+        self.assertTrue(self.log.logger.error.called)
 
 
 class LogsTest(unittest.TestCase):
