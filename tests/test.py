@@ -2,7 +2,7 @@ import logging
 import unittest
 import sys
 import os.path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
