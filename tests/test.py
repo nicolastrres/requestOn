@@ -26,9 +26,9 @@ class RequestServiceTest(unittest.TestCase):
     def test_call_a_endpoint_list(self, mock_logging):
         self.request.addEndpoints(self.expectedEndpoints())
         actual_responses = self.request.start()
-        self.assertEqual(200, actual_responses[0].code)
-        self.assertEqual(200, actual_responses[1].code)
-        self.assertEqual(200, actual_responses[2].code)
+        self.assertEqual(200, actual_responses[0])
+        self.assertEqual(200, actual_responses[1])
+        self.assertEqual(200, actual_responses[2])
         self.assertTrue(mock_logging.info.called)
 
     @patch('checkit.logs.Logs.logger')
@@ -37,9 +37,9 @@ class RequestServiceTest(unittest.TestCase):
         endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
         self.request.addEndpoints(endpoints)
         actual_responses = self.request.start()
-        self.assertEqual(200, actual_responses[0].code)
-        self.assertEqual(404, actual_responses[1].code)
-        self.assertEqual(200, actual_responses[2].code)
+        self.assertEqual(200, actual_responses[0])
+        self.assertEqual(404, actual_responses[1])
+        self.assertEqual(200, actual_responses[2])
         self.assertTrue(mock_logging.info.called)
         self.assertTrue(mock_logging.error.called)
 
@@ -48,19 +48,8 @@ class RequestServiceTest(unittest.TestCase):
         self.request.addEndpoint('test')
         actual_responses = self.request.start()
         expected_response_endpoint = 0
-        self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
-        self.assertEqual("unknown url type: 'test'", actual_responses[0].data[0])
+        self.assertEqual(expected_response_endpoint, actual_responses[0])
         self.assertTrue(mock_logging.error.called)
-
-    @patch('checkit.logs.Logs.logger')
-    def test_call_a_endpoint_list_and_retrieve_data(self, mock_logging):
-        self.request.addEndpoint('http://www.google.com')
-        actual_responses = self.request.start()
-        expected_response_endpoint = 200
-        # compare(expected_response_endpoint, actual_responses[0])
-        self.assertEqual(expected_response_endpoint.code, actual_responses[0].code)
-        self.assertEqual(expected_response_endpoint.data, actual_responses[0].data)
-        self.assertTrue(mock_logging.info.called)
 
 
 class LogsTest(unittest.TestCase):

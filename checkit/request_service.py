@@ -30,7 +30,7 @@ class RequestService():
             try:
                 response_endpoint = urllib.request.urlopen(endpoint).getcode()
                 responses.append(response_endpoint)
-                Logs.info(endpoint + " --- code response:" + str(response_endpoint.code))
+                Logs.info(endpoint + " --- code response:" + str(response_endpoint))
             except urllib.error.HTTPError as e:
                 Logs.error_status_code(e.code)
                 responses.append(e.code)
