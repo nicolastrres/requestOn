@@ -17,13 +17,12 @@ def usage():
 def parse_args():
     parser = argparse.ArgumentParser(prog="Checkit")
     group_request = parser.add_argument_group("Request options")
-    group_request.add_argument("-t", "--target", action="store", dest="target_url",
-                               help="Do a request to an specific url")
+    group_request.add_argument("-t", "--targets", nargs="*", type=str, default=[], action="store", dest="target_url",
+                               help="Do a requests to a list of targets")
     group_log = parser.add_argument_group("Logs options")
     group_log.add_argument("-l", "--log", action="store", dest="log_file_name",
                            help="Specify a log filename")
     args = parser.parse_args()
-
     return args
 
 
@@ -35,10 +34,12 @@ def main():
     if args.log_file_name:
         logs.write_file(filename=args.log_file_name)
     if args.target_url:
-        requestService.get_code(url=args.target_url, logs=logs)
+        requestService.addEndpoints(args.target_url)
+        print(requestService.start())
 
 
 if __name__ == "__main__":
-    requestService = RequestService()
     logs = Logs()
+    requestService = RequestService(api_name="Api_name", logs=logs)
+
     main()
