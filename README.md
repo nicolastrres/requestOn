@@ -1,17 +1,17 @@
-# Checkink
+# RequestOn
 #### Create and manage app's services requests with python
-Checkink is a python open source software that allow check the availability of services. It uses [dashy](https://github.com/thoughtworks.com/dashy) as dashboard to show the status of the service.
+RequestOn is a python open source software that allow check the availability of services. It uses [dashy](https://github.com/thoughtworks.com/dashy) as dashboard to show the status of the service.
 
 
-[![Build Status](https://snap-ci.com/nicolastrres/checkink/branch/master/build_image)](https://snap-ci.com/nicolastrres/checkink/branch/master)
+[![Build Status](https://snap-ci.com/nicolastrres/requestOn/branch/master/build_image)](https://snap-ci.com/nicolastrres/requestOn/branch/master)
 
 
-[![Stories in Ready](https://badge.waffle.io/nicolastrres/checkink.svg?label=ready&title=Ready)](http://waffle.io/nicolastrres/checkink)
+[![Stories in Ready](https://badge.waffle.io/nicolastrres/requestOn.svg?label=ready&title=Ready)](http://waffle.io/nicolastrres/requestOn)
 
-[![Throughput Graph](https://graphs.waffle.io/nicolastrres/checkink/throughput.svg)](https://waffle.io/nicolastrres/checkink/metrics)
+[![Throughput Graph](https://graphs.waffle.io/nicolastrres/requestOn/throughput.svg)](https://waffle.io/nicolastrres/requestOn/metrics)
 
 ####How to contribute:
-1. Fork the repository https://github.com/nicolastrres/checkink/fork
+1. Fork the repository https://github.com/nicolastrres/requestOn/fork
 2. Write your tests on tests/test.py
 3. Run the tests using the script run_tests.sh, because this is going to run the pep8 too.
 4. Push your changes and make a pull request.

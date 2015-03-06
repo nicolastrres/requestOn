@@ -1,16 +1,16 @@
 import argparse
 import sys
-from checkink.request_service import RequestService
-from checkink.logs import Logs
+from requestOn.request_service import RequestService
+from requestOn.logs import Logs
 
 
 def usage():
     print("\t\t\t Checkit\n\n")
-    print("Usage: checkink -r target [-l log_file_name]")
+    print("Usage: requestOn -r target [-l log_file_name]")
     print("-t --target                  - target to be requested. Required")
     print("-l --log                     - name of the file where the logs are going to be saved. Optional")
-    print("\n\nExamples:\n checkink -t http://www.google.com")
-    print(" checkink -t http://www.facebook.com -l logs.txt")
+    print("\n\nExamples:\n requestOn -t http://www.google.com")
+    print(" requestOn -t http://www.facebook.com -l logs.txt")
     sys.exit(0)
 
 

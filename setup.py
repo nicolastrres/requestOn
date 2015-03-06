@@ -13,7 +13,7 @@ setup(
     long_description='Checkit is a python open source software that allow check the '
                      'availability of services. It uses dashy as dashboard '
                      'to show the status of the service.',
-    url='https://github.com/nicolastrres/checkink',
+    url='https://github.com/nicolastrres/requestOn',
     author='Nicolas Agustin Torres',
     author_email='nicolastrres@gmail.com',
     license='MIT',
@@ -44,7 +44,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'checkink=checkink.__main__:main',
+            'requestOn=requestOn.__main__:main',
         ],
     },
 )
