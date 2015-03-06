@@ -1,10 +1,6 @@
 import urllib.request
 import urllib.error
 import urllib.parse
-import sys
-import os.path
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 class RequestService():

@@ -1,7 +1,7 @@
 import argparse
 import sys
-from request_service import RequestService
-from logs import Logs
+from checkink.request_service import RequestService
+from checkink.logs import Logs
 
 
 def usage():
@@ -27,6 +27,9 @@ def parse_args():
 
 
 def main():
+    logs = Logs()
+    requestService = RequestService(api_name="Api_name", logs=logs)
+
     if not len(sys.argv[1:]):
         usage()
     args = parse_args()
@@ -39,7 +42,4 @@ def main():
 
 
 if __name__ == "__main__":
-    logs = Logs()
-    requestService = RequestService(api_name="Api_name", logs=logs)
-
     main()
