@@ -6,8 +6,8 @@ from unittest.mock import MagicMock
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from checkit.request_service import RequestService
-from checkit.logs import Logs
+from checkink.request_service import RequestService
+from checkink.logs import Logs
 
 
 class RequestServiceTest(unittest.TestCase):
