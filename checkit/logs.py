@@ -2,21 +2,21 @@ import logging
 
 
 class Logs():
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
 
-    @staticmethod
-    def info(message):
-        Logs.logger.info('Calling endpoint: ' + message)
+    def write_file(self, filename):
+        self.logger.addHandler(logging.FileHandler(filename))
 
-    @staticmethod
-    def error_status_code(status_code):
-        Logs.logger.error('Error %s' % status_code)
+    def info(self, message):
+        self.logger.info('Calling endpoint: ' + message)
 
-    @staticmethod
-    def general_error(message):
-        Logs.logger.error('Undefined Error: ' + message)
+    def error_status_code(self, status_code):
+        self.logger.error('Error %s' % status_code)
 
-    @staticmethod
-    def extra_info(message):
-        Logs.logger.info('Extra information: ' + message)
+    def general_error(self, message):
+        self.logger.error('Undefined Error: ' + message)
+
+    def extra_info(self, message):
+        self.logger.info('Extra information: ' + message)

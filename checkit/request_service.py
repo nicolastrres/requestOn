@@ -6,14 +6,13 @@ import os.path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from checkit.logs import Logs
-
 
 class RequestService():
 
-    def __init__(self, api_name):
+    def __init__(self, api_name, logs):
         self.api_name = api_name
         self.endpoints = []
+        self.logs = logs
 
     def addEndpoint(self, endpoint):
         self.endpoints.append(endpoint)
@@ -30,15 +29,15 @@ class RequestService():
             try:
                 response_endpoint = urllib.request.urlopen(endpoint).getcode()
                 responses.append(response_endpoint)
-                Logs.info(endpoint + " --- code response:" + str(response_endpoint))
+                self.logs.info(endpoint + " --- code response:" + str(response_endpoint))
             except urllib.error.HTTPError as e:
-                Logs.error_status_code(e.code)
+                self.logs.error_status_code(e.code)
                 responses.append(e.code)
             except urllib.error.URLError as e:
-                Logs.general_error(e.reason)
+                self.logs.general_error(e.reason)
                 responses.append(0)
             except ValueError as e:
-                Logs.general_error("".join(e.args))
+                self.logs.general_error("".join(e.args))
                 responses.append(0)
 
         return responses
