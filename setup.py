@@ -5,12 +5,12 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 setup(
-    name='Checkit',
+    name='RequestOn',
 
     version='0.0.1',
 
     description='Create and manage apps services requests with python',
-    long_description='Checkit is a python open source software that allow check the '
+    long_description='RequestOn is a python open source software that allow check the '
                      'availability of services. It uses dashy as dashboard '
                      'to show the status of the service.',
     url='https://github.com/nicolastrres/requestOn',

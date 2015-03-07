@@ -5,7 +5,7 @@ from requestOn.logs import Logs
 
 
 def usage():
-    print("\t\t\t Checkit\n\n")
+    print("\t\t\t RequestOn\n\n")
     print("Usage: requestOn -r target [-l log_file_name]")
     print("-t --target                  - target to be requested. Required")
     print("-l --log                     - name of the file where the logs are going to be saved. Optional")
@@ -15,7 +15,7 @@ def usage():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(prog="Checkit")
+    parser = argparse.ArgumentParser(prog="RequestOn")
     group_request = parser.add_argument_group("Request options")
     group_request.add_argument("-t", "--targets", nargs="*", type=str, default=[], action="store", dest="target_url",
                                help="Do a requests to a list of targets")
