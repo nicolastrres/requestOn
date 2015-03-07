@@ -4,8 +4,8 @@ RequestOn is a python open source software that allow check the availability of 
 
 
 [![Build Status](https://snap-ci.com/nicolastrres/requestOn/branch/master/build_image)](https://snap-ci.com/nicolastrres/requestOn/branch/master)
-
-
+[![PyPi version](https://pypip.in/v/requeston/badge.png)](https://pypi.python.org/pypi/requeston)
+[![PyPi downloads](https://pypip.in/d/requeston/badge.png)](https://pypi.python.org/pypi/requeston)
 [![Stories in Ready](https://badge.waffle.io/nicolastrres/requestOn.svg?label=ready&title=Ready)](http://waffle.io/nicolastrres/requestOn)
 
 [![Throughput Graph](https://graphs.waffle.io/nicolastrres/requestOn/throughput.svg)](https://waffle.io/nicolastrres/requestOn/metrics)
