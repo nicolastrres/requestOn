@@ -37,7 +37,7 @@ def main():
     if args.log_file_name:
         logs.write_file(filename=args.log_file_name)
     if args.target_url:
-        requestService.addEndpoints(args.target_url)
+        requestService.add_endpoints(args.target_url)
         print(requestService.start())
 
 

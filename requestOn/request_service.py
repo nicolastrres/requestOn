@@ -10,13 +10,13 @@ class RequestService():
         self.endpoints = []
         self.logs = logs
 
-    def addEndpoint(self, endpoint):
+    def add_endpoint(self, endpoint):
         self.endpoints.append(endpoint)
 
-    def addEndpoints(self, endpointsList):
+    def add_endpoints(self, endpointsList):
         self.endpoints = endpointsList
 
-    def getEndpointList(self):
+    def get_endpointList(self):
         return self.endpoints
 
     def start(self):

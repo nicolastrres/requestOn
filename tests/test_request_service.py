@@ -15,12 +15,12 @@ class RequestServiceTest(unittest.TestCase):
 
     def test_should_add_a_endpoint_list(self):
         expected_endpoints = self.expectedEndpoints()
-        self.request.addEndpoints(expected_endpoints)
-        actual_endpoints = self.request.getEndpointList()
+        self.request.add_endpoints(expected_endpoints)
+        actual_endpoints = self.request.get_endpointList()
         self.assertEqual(expected_endpoints, actual_endpoints)
 
     def test_call_a_endpoint_list(self):
-        self.request.addEndpoints(self.expectedEndpoints())
+        self.request.add_endpoints(self.expectedEndpoints())
         self.log.logger.info = MagicMock()
 
         actual_responses = self.request.start()
@@ -33,7 +33,7 @@ class RequestServiceTest(unittest.TestCase):
     def test_call_a_endpoint_list_with_broken_url(self):
         endpoints = self.expectedEndpoints()
         endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
-        self.request.addEndpoints(endpoints)
+        self.request.add_endpoints(endpoints)
         self.log.logger.info = MagicMock()
         self.log.logger.error = MagicMock()
         actual_responses = self.request.start()
@@ -46,7 +46,7 @@ class RequestServiceTest(unittest.TestCase):
         self.assertTrue(self.log.logger.error.called)
 
     def test_should_treat_correctly_when_a_invalid_url_is_passed(self):
-        self.request.addEndpoint('test')
+        self.request.add_endpoint('test')
         expected_response_endpoint = 0
         self.log.logger.error = MagicMock()
 
