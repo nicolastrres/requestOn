@@ -3,8 +3,9 @@
 RequestOn is a python open source software that allow check the availability of services. It uses [dashy](https://github.com/thoughtworks.com/dashy) as dashboard to show the status of the service.
 
 ### Installation  
-#### Stable version
+##### Stable version 
 [![PyPi version](https://pypip.in/v/requeston/badge.png)](https://pypi.python.org/pypi/requeston)
+
 ```ssh
 pip install requeston
 ```
