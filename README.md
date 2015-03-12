@@ -10,9 +10,19 @@ RequestOn is a python open source software that allow check the availability of 
 pip install requeston
 ```
 ## How to use
+You can send the end points from the command line:
 ```ssh
 requestOn -t https://google.com https://github.com https://facebook.com
 requestOn -t http://despegar.com http://decolar.com -l log_file.txt
+```
+Or you can read them from a file:
+```ssh
+requestOn -f file_to_read.txt -l logs.txt
+```
+The structure of the file should be:
+```ssh
+https://google.com
+https://github.com
 ```
 ##How to contribute:
 [![Build Status](https://snap-ci.com/nicolastrres/requestOn/branch/master/build_image)](https://snap-ci.com/nicolastrres/requestOn/branch/master)
