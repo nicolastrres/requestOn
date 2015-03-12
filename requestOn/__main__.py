@@ -1,13 +1,15 @@
 import argparse
 import sys
-from requestOn.request_service import RequestService
-from requestOn.logs import Logs
+from request_service import RequestService
+from logs import Logs
 
 
 def usage():
     print("\t\t\t RequestOn\n\n")
     print("Usage: requestOn -r target [-l log_file_name]")
-    print("-t --target                  - target to be requested. Required")
+    print("-t --target                  - target to be requested. If file is defined, "
+          "this will not be consider. Optional")
+    print("-f --file                  - file with endpoints to read and to be requested. Optional")
     print("-l --log                     - name of the file where the logs are going to be saved. Optional")
     print("\n\nExamples:\n requestOn -t http://www.google.com")
     print(" requestOn -t http://www.facebook.com -l logs.txt")
@@ -19,6 +21,8 @@ def parse_args():
     group_request = parser.add_argument_group("Request options")
     group_request.add_argument("-t", "--targets", nargs="*", type=str, default=[], action="store", dest="target_url",
                                help="Do a requests to a list of targets")
+    group_request.add_argument("-f", "--file", action="store", dest="file_to_read",
+                               help="file with endpoints to read and to be requested. Optional")
     group_log = parser.add_argument_group("Logs options")
     group_log.add_argument("-l", "--log", action="store", dest="log_file_name",
                            help="Specify a log filename")
@@ -39,7 +43,9 @@ def main():
     if args.target_url:
         requestService.add_endpoints(args.target_url)
         print(requestService.start())
-
+    elif args.file_to_read:
+        requestService.read_endpoints_from_file(args.file_to_read)
+        print(requestService.start())
 
 if __name__ == "__main__":
     main()
