@@ -19,6 +19,10 @@ class RequestService():
     def get_endpointList(self):
         return self.endpoints
 
+    def read_endpoints_from_file(self, file):
+        with open(file) as f:
+            self.add_endpoints(f.readlines())
+
     def start(self):
         responses = []
         for endpoint in self.endpoints:

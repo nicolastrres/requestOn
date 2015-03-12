@@ -1,11 +1,12 @@
+import tempfile
 import unittest
+from unittest.mock import MagicMock
+
 from requestOn.request_service import RequestService
 from requestOn.logs import Logs
-from unittest.mock import MagicMock
 
 
 class RequestServiceTest(unittest.TestCase):
-
     def setUp(self):
         self.log = Logs()
         self.request = RequestService(api_name='API Name', logs=self.log)
