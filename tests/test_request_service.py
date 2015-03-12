@@ -55,3 +55,12 @@ class RequestServiceTest(unittest.TestCase):
 
         self.assertEqual(expected_response_endpoint, actual_responses[0])
         self.assertTrue(self.log.logger.error.called)
+
+    def test_should_get_endpoints_from_file(self):
+        data = 'https://google.com'
+        with tempfile.NamedTemporaryFile() as tempf:
+            tempf.write(bytes(data, 'UTF-8'))
+            tempf.flush()
+            self.request.read_endpoints_from_file(tempf.name)
+
+        self.assertEqual([data], self.request.get_endpointList())
