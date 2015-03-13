@@ -2,6 +2,7 @@ import argparse
 import sys
 from request_service import RequestService
 from logs import Logs
+from dashy import Dashy
 
 
 def usage():
@@ -33,6 +34,7 @@ def parse_args():
 def main():
     logs = Logs()
     requestService = RequestService(api_name="Api_name", logs=logs)
+    dashy = Dashy()
 
     if not len(sys.argv[1:]):
         usage()
@@ -42,10 +44,14 @@ def main():
         logs.write_file(filename=args.log_file_name)
     if args.target_url:
         requestService.add_endpoints(args.target_url)
-        print(requestService.start())
+        responses = requestService.start()
+        dashy.request(requestService, responses)
+        print(responses)
     elif args.file_to_read:
         requestService.read_endpoints_from_file(args.file_to_read)
-        print(requestService.start())
+        responses = requestService.start()
+        dashy.request(requestService, responses)
+        print(responses)
 
 if __name__ == "__main__":
     main()
