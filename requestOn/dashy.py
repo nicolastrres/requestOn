@@ -6,7 +6,7 @@ import urllib.parse
 class Dashy():
     def request(self, request_service, responses):
         url = "http://localhost:3000/api/requests/87AB7982EC3D9A799783332B68B3A22E"
-        responses = self.create_response_boolean_list(responses)
+        responses = create_response_boolean_list(responses)
 
         for code in responses:
             values = self.create_values(request_service.api_name, code)
