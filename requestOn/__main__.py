@@ -34,7 +34,6 @@ def parse_args():
 def main():
     logs = Logs()
     requestService = RequestService(api_name="Api_name", logs=logs)
-    dashy = Dashy()
 
     if not len(sys.argv[1:]):
         usage()
@@ -45,12 +44,10 @@ def main():
     if args.target_url:
         requestService.add_endpoints(args.target_url)
         responses = requestService.start()
-        dashy.request(requestService, responses)
         print(responses)
     elif args.file_to_read:
         requestService.read_endpoints_from_file(args.file_to_read)
         responses = requestService.start()
-        dashy.request(requestService, responses)
         print(responses)
 
 if __name__ == "__main__":
