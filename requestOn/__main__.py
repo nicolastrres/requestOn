@@ -8,10 +8,10 @@ from dashy import Dashy
 def usage():
     print("\t\t\t RequestOn\n\n")
     print("Usage: requestOn -r target [-l log_file_name]")
-    print("-t --target                  - target to be requested. If file is defined, "
+    print("-t --target                - target to be requested. If file is defined, "
           "this will not be consider. Optional")
     print("-f --file                  - file with endpoints to read and to be requested. Optional")
-    print("-l --log                     - name of the file where the logs are going to be saved. Optional")
+    print("-l --log                   - name of the file where the logs are going to be saved. Optional")
     print("\n\nExamples:\n requestOn -t http://www.google.com")
     print(" requestOn -t http://www.facebook.com -l logs.txt")
     sys.exit(0)
@@ -33,7 +33,7 @@ def parse_args():
 
 def main():
     logs = Logs()
-    requestService = RequestService(api_name="Api_name", logs=logs)
+    request_service = RequestService(api_name="Api_name", logs=logs)
 
     if not len(sys.argv[1:]):
         usage()
@@ -42,12 +42,12 @@ def main():
     if args.log_file_name:
         logs.write_file(filename=args.log_file_name)
     if args.target_url:
-        requestService.add_endpoints(args.target_url)
-        responses = requestService.start()
+        request_service.add_endpoints(args.target_url)
+        responses = request_service.start()
         print(responses)
     elif args.file_to_read:
-        requestService.read_endpoints_from_file(args.file_to_read)
-        responses = requestService.start()
+        request_service.read_endpoints_from_file(args.file_to_read)
+        responses = request_service.start()
         print(responses)
 
 if __name__ == "__main__":

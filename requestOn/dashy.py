@@ -1,6 +1,4 @@
-import urllib.request
-import urllib.error
-import urllib.parse
+import requests
 
 
 class Dashy():
@@ -13,10 +11,8 @@ class Dashy():
             values = {"request[name]": requestService.api_name,
                       "request[success]": code,
                       "request[meta][environment]": "test"}
-            data = urllib.parse.urlencode(values)
-            binary_data = data.encode('utf8')
-            req = urllib.request.Request(url, binary_data)
-            print(urllib.request.urlopen(req).getcode())
+            req = requests.post(url, values)
+            print(req.status_code)
 
 if __name__ == '__main__':
     dashy = Dashy()
