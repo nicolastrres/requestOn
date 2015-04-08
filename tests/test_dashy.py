@@ -1,6 +1,6 @@
 import random
 import unittest
-from dashy import create_response_boolean_list
+from requestOn.dashy import create_response_boolean_list
 
 possible_responses = [200, 400, 401, 404, 405, 406, 500, 501, 502, 503, None, 0]
 boolean_responses = [True, False, False, False, False, False, False, False, False, False, False, False]

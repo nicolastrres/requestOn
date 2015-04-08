@@ -1,2 +1,1 @@
 pep8==1.5.7
-hypothesis==1.0.0
