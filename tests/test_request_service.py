@@ -24,7 +24,7 @@ class RequestServiceTest(unittest.TestCase):
         self.request.add_endpoints(self.expectedEndpoints())
         self.log.logger.info = MagicMock()
 
-        actual_responses = self.request.start()
+        actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
         self.assertEqual(200, actual_responses[1])
@@ -37,7 +37,7 @@ class RequestServiceTest(unittest.TestCase):
         self.request.add_endpoints(endpoints)
         self.log.logger.info = MagicMock()
         self.log.logger.error = MagicMock()
-        actual_responses = self.request.start()
+        actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
         self.assertEqual(404, actual_responses[1])
@@ -48,12 +48,11 @@ class RequestServiceTest(unittest.TestCase):
 
     def test_should_treat_correctly_when_a_invalid_url_is_passed(self):
         self.request.add_endpoint('test')
-        expected_response_endpoint = 0
         self.log.logger.error = MagicMock()
 
-        actual_responses = self.request.start()
+        actual_responses = self.request.call_endpoints()
 
-        self.assertEqual(expected_response_endpoint, actual_responses[0])
+        self.assertEqual(0, len(actual_responses))
         self.assertTrue(self.log.logger.error.called)
 
     def test_should_get_endpoints_from_file(self):

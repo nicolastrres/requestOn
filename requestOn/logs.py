@@ -16,7 +16,7 @@ class Logs():
         self.logger.error('Error %s' % status_code)
 
     def general_error(self, message):
-        self.logger.error('Undefined Error: ' + message)
+        self.logger.error('Undefined Error: ' + str(message))
 
     def extra_info(self, message):
         self.logger.info('Extra information: ' + message)

@@ -1,6 +1,4 @@
-import urllib.request
-import urllib.error
-import urllib.parse
+import requests
 
 
 class RequestService():
@@ -23,21 +21,17 @@ class RequestService():
         with open(file) as f:
             self.add_endpoints(f.readlines())
 
-    def start(self):
+    def call_endpoints(self):
         responses = []
         for endpoint in self.endpoints:
             try:
-                response_endpoint = urllib.request.urlopen(endpoint).getcode()
-                responses.append(response_endpoint)
-                self.logs.info(endpoint + " --- code response:" + str(response_endpoint))
-            except urllib.error.HTTPError as e:
-                self.logs.error_status_code(e.code)
-                responses.append(e.code)
-            except urllib.error.URLError as e:
-                self.logs.general_error(e.reason)
-                responses.append(0)
-            except ValueError as e:
-                self.logs.general_error("".join(e.args))
-                responses.append(0)
-
+                response = requests.get(endpoint)
+                response_status_code = response.status_code
+                responses.append(response_status_code)
+                self.logs.info(endpoint + " --- code response:" + str(response_status_code))
+                response.raise_for_status()
+            except requests.HTTPError as e:
+                self.logs.general_error(e)
+            except requests.RequestException as e:
+                self.logs.general_error(e.args)
         return responses
