@@ -51,21 +51,20 @@ def main():
     if args.target_url:
         request_service.add_endpoints(args.target_url)
         status_codes = request_service.call_endpoints()
-        if args.app_id:
-            api_name = args.api_name if args.api_name else ""
-            api = API(api_name=api_name, app_id=args.app_id)
-            dashy = Dashy(api=api, status_codes=status_codes)
-            dashy.request()
-        print(status_codes)
+        call_dashy(status_codes=status_codes, args=args)
     elif args.file_to_read:
         request_service.read_endpoints_from_file(args.file_to_read)
         status_codes = request_service.call_endpoints()
-        if args.app_id:
-            api_name = args.api_name if args.api_name else ""
-            api = API(api_name=api_name, app_id=args.app_id)
-            dashy = Dashy(api=api, status_codes=status_codes)
-            dashy.request()
-        print(status_codes)
+        call_dashy(status_codes=status_codes, args=args)
+
+
+def call_dashy(status_codes, args):
+    if args.app_id:
+        api_name = args.api_name if args.api_name else ""
+        api = API(api_name=api_name, app_id=args.app_id)
+        dashy = Dashy(api=api, status_codes=status_codes)
+        dashy.request()
+    print(status_codes)
 
 if __name__ == "__main__":
     main()
