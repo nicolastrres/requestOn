@@ -9,7 +9,7 @@ from requestOn.logs import Logs
 class RequestServiceTest(unittest.TestCase):
     def setUp(self):
         self.log = Logs()
-        self.request = RequestService(api_name='API Name', logs=self.log)
+        self.request = RequestService(logs=self.log)
 
     def expectedEndpoints(self):
         return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
@@ -24,7 +24,7 @@ class RequestServiceTest(unittest.TestCase):
         self.request.add_endpoints(self.expectedEndpoints())
         self.log.logger.info = MagicMock()
 
-        actual_responses = self.request.start()
+        actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
         self.assertEqual(200, actual_responses[1])
@@ -37,7 +37,7 @@ class RequestServiceTest(unittest.TestCase):
         self.request.add_endpoints(endpoints)
         self.log.logger.info = MagicMock()
         self.log.logger.error = MagicMock()
-        actual_responses = self.request.start()
+        actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
         self.assertEqual(404, actual_responses[1])
@@ -50,7 +50,7 @@ class RequestServiceTest(unittest.TestCase):
         self.request.add_endpoint('test')
         self.log.logger.error = MagicMock()
 
-        actual_responses = self.request.start()
+        actual_responses = self.request.call_endpoints()
 
         self.assertEqual(0, len(actual_responses))
         self.assertTrue(self.log.logger.error.called)
