@@ -9,7 +9,7 @@ from requestOn.logs import Logs
 class RequestServiceTest(unittest.TestCase):
     def setUp(self):
         self.log = Logs()
-        self.request = RequestService(api_name='API Name', logs=self.log)
+        self.request = RequestService(logs=self.log)
 
     def expectedEndpoints(self):
         return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']

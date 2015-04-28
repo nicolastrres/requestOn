@@ -2,19 +2,19 @@ import requests
 
 
 class Dashy():
-    def __init__(self, api_name, status_codes):
-        self.name = api_name
+    def __init__(self, api, status_codes):
+        self.api = api
         self.environment = "test"
         self.status_codes = status_codes
         self.boolean_response_list = create_response_boolean_list(self.status_codes)
 
     def request(self):
-        url = "http://localhost:3000/api/requests/87AB7982EC3D9A799783332B68B3A22E"
+        url = "http://localhost:3000/api/requests/{}".format(self.api.app_id)
         for value in self.boolean_response_list:
             requests.post(url, self.create_value(value))
 
     def create_value(self, success):
-        return {"request[name]": self.name,
+        return {"request[name]": self.api.api_name,
                 "request[success]": success,
                 "request[meta][environment]": "test"}
 

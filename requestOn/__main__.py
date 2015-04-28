@@ -1,5 +1,6 @@
 import argparse
 import sys
+from api import API
 from request_service import RequestService
 from logs import Logs
 from dashy import Dashy
@@ -32,27 +33,27 @@ def parse_args():
 
 
 def main():
-    logs = Logs()
-    request_service = RequestService(api_name="Api_name", logs=logs)
+    api = API("test re loco")
+    request_service = RequestService(logs=api.logs)
 
     if not len(sys.argv[1:]):
         usage()
     args = parse_args()
 
     if args.log_file_name:
-        logs.write_file(filename=args.log_file_name)
+        api.logs.write_file(filename=args.log_file_name)
     if args.target_url:
         request_service.add_endpoints(args.target_url)
-        responses = request_service.call_endpoints()
-        dashy = Dashy(api_name="Api_name", status_codes=responses)
+        status_codes = request_service.call_endpoints()
+        dashy = Dashy(api_name=api.api_name, status_codes=status_codes)
         dashy.request()
-        print(responses)
+        print(status_codes)
     elif args.file_to_read:
         request_service.read_endpoints_from_file(args.file_to_read)
-        responses = request_service.call_endpoints()
-        dashy = Dashy(api_name="Api_name", status_codes=responses)
+        status_codes = request_service.call_endpoints()
+        dashy = Dashy(api_name=api.api_name, status_codes=status_codes)
         dashy.request()
-        print(responses)
+        print(status_codes)
 
 if __name__ == "__main__":
     main()
