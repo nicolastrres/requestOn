@@ -39,7 +39,7 @@ def parse_args():
 
 
 def main():
-    api = API("test re loco")
+    api = API("test re loco")  # TODO fix this
     request_service = RequestService(logs=api.logs)
 
     if not len(sys.argv[1:]):
