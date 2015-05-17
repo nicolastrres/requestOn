@@ -1,8 +1,8 @@
 import argparse
 import sys
-from api import API
-from request_service import RequestService
-from dashy import Dashy
+from .api import API
+from .request_service import RequestService
+from .dashy import Dashy
 
 
 def usage():

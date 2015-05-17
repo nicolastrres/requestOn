@@ -1,4 +1,4 @@
-from logs import Logs
+from .logs import Logs
 
 
 class API(object):
