@@ -7,7 +7,7 @@ here = path.abspath(path.dirname(__file__))
 setup(
     name='RequestOn',
 
-    version='0.0.2',
+    version='0.0.3',
 
     description='Create and manage apps services requests with python',
     long_description='RequestOn is a python open source software that allow check the '
