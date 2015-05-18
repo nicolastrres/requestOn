@@ -10,6 +10,8 @@ RequestOn is a python open source software that allow check the availability of 
 pip install requeston
 ```
 ## How to use
+[![Documentation Status](https://readthedocs.org/projects/requeston/badge/?version=latest)](https://readthedocs.org/projects/requeston/?badge=latest)
+
 You can send the end points from the command line:
 ```ssh
 requestOn -t https://google.com https://github.com https://facebook.com
