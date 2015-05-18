@@ -24,6 +24,15 @@ The structure of the file should be:
 https://google.com
 https://github.com
 ```
+## Integration with Dashy
+#### How to install 
+You can follow the [instructions](https://github.com/thoughtworks/dashy#installation) to install.
+Then open a browser and take the app_id of dashy
+#### Integrate dashy with requestOn
+```ssh 
+requestOn -t https://google.com https://github.com -a [APP_ID] -n [APP_NAME]
+```
+The app name can be anything.
 ##How to contribute:
 [![Build Status](https://snap-ci.com/nicolastrres/requestOn/branch/master/build_image)](https://snap-ci.com/nicolastrres/requestOn/branch/master)
 [![PyPi downloads](https://pypip.in/d/requeston/badge.png)](https://pypi.python.org/pypi/requeston)
