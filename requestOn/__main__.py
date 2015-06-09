@@ -35,7 +35,6 @@ def parse_args():
 
 
 def main():
-    api = API("test re loco")
     request_service = RequestService()
 
     if not len(sys.argv[1:]):
@@ -43,7 +42,7 @@ def main():
     args = parse_args()
 
     if args.target_url:
-        request_service.add_endpoints(args.target_url)
+        request_service.endpoints = args.target_url
         status_codes = request_service.call_endpoints()
         call_dashy(status_codes=status_codes, args=args)
     elif args.file_to_read:

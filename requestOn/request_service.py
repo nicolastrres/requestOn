@@ -6,18 +6,9 @@ class RequestService():
     def __init__(self):
         self.endpoints = []
 
-    def add_endpoint(self, endpoint):
-        self.endpoints.append(endpoint)
-
-    def add_endpoints(self, endpointsList):
-        self.endpoints = endpointsList
-
-    def get_endpointList(self):
-        return self.endpoints
-
     def read_endpoints_from_file(self, file):
         with open(file) as f:
-            self.add_endpoints(f.readlines())
+            self.endpoints = f.readlines()
 
     def call_endpoints(self):
         status_codes = []

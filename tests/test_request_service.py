@@ -6,20 +6,13 @@ from unittest.mock import patch
 
 
 class RequestServiceTest(unittest.TestCase):
+
     def setUp(self):
         self.request = RequestService()
-
-    def expectedEndpoints(self):
-        return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
-
-    def test_should_add_a_endpoint_list(self):
-        expected_endpoints = self.expectedEndpoints()
-        self.request.add_endpoints(expected_endpoints)
-        actual_endpoints = self.request.get_endpointList()
-        self.assertEqual(expected_endpoints, actual_endpoints)
+        self.expected_endpoints = ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
 
     def test_call_a_endpoint_list(self):
-        self.request.add_endpoints(self.expectedEndpoints())
+        self.request.endpoints = self.expected_endpoints
 
         actual_responses = self.request.call_endpoints()
 
@@ -29,9 +22,9 @@ class RequestServiceTest(unittest.TestCase):
 
     @patch("builtins.print")
     def test_call_a_endpoint_list_with_broken_url(self, mock_print):
-        endpoints = self.expectedEndpoints()
+        endpoints = self.expected_endpoints
         endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
-        self.request.add_endpoints(endpoints)
+        self.request.endpoints = endpoints
         actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
@@ -40,7 +33,7 @@ class RequestServiceTest(unittest.TestCase):
 
     @patch("builtins.print")
     def test_should_treat_correctly_when_a_invalid_url_is_passed(self, mock_print):
-        self.request.add_endpoint('test')
+        self.request.endpoints.append('test')
 
         actual_responses = self.request.call_endpoints()
 
@@ -53,4 +46,4 @@ class RequestServiceTest(unittest.TestCase):
             tempf.flush()
             self.request.read_endpoints_from_file(tempf.name)
 
-        self.assertEqual([data], self.request.get_endpointList())
+        self.assertEqual([data], self.request.endpoints)
