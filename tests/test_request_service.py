@@ -1,15 +1,13 @@
 import tempfile
 import unittest
-from unittest.mock import MagicMock
 
 from requestOn.request_service import RequestService
-from requestOn.logs import Logs
+from unittest.mock import patch
 
 
 class RequestServiceTest(unittest.TestCase):
     def setUp(self):
-        self.log = Logs()
-        self.request = RequestService(logs=self.log)
+        self.request = RequestService()
 
     def expectedEndpoints(self):
         return ['http://www.github.com', 'http://www.google.com', 'http://www.circleci.com']
@@ -22,38 +20,31 @@ class RequestServiceTest(unittest.TestCase):
 
     def test_call_a_endpoint_list(self):
         self.request.add_endpoints(self.expectedEndpoints())
-        self.log.logger.info = MagicMock()
 
         actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
         self.assertEqual(200, actual_responses[1])
         self.assertEqual(200, actual_responses[2])
-        self.assertTrue(self.log.logger.info.called)
 
-    def test_call_a_endpoint_list_with_broken_url(self):
+    @patch("builtins.print")
+    def test_call_a_endpoint_list_with_broken_url(self, mock_print):
         endpoints = self.expectedEndpoints()
         endpoints[1] = 'https://www.facebook.com/Idontknow?_rdr'
         self.request.add_endpoints(endpoints)
-        self.log.logger.info = MagicMock()
-        self.log.logger.error = MagicMock()
         actual_responses = self.request.call_endpoints()
 
         self.assertEqual(200, actual_responses[0])
         self.assertEqual(404, actual_responses[1])
         self.assertEqual(200, actual_responses[2])
 
-        self.assertTrue(self.log.logger.info)
-        self.assertTrue(self.log.logger.error.called)
-
-    def test_should_treat_correctly_when_a_invalid_url_is_passed(self):
+    @patch("builtins.print")
+    def test_should_treat_correctly_when_a_invalid_url_is_passed(self, mock_print):
         self.request.add_endpoint('test')
-        self.log.logger.error = MagicMock()
 
         actual_responses = self.request.call_endpoints()
 
         self.assertEqual(0, len(actual_responses))
-        self.assertTrue(self.log.logger.error.called)
 
     def test_should_get_endpoints_from_file(self):
         data = 'https://google.com'

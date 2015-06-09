@@ -15,11 +15,11 @@ pip install requeston
 You can send the end points from the command line:
 ```ssh
 requestOn -t https://google.com https://github.com https://facebook.com
-requestOn -t http://despegar.com http://decolar.com -l log_file.txt
+requestOn -t http://despegar.com http://decolar.com
 ```
 Or you can read them from a file:
 ```ssh
-requestOn -f file_to_read.txt -l logs.txt
+requestOn -f file_to_read.txt
 ```
 The structure of the file should be:
 ```ssh

@@ -3,9 +3,8 @@ import requests
 
 class RequestService():
 
-    def __init__(self, logs):
+    def __init__(self):
         self.endpoints = []
-        self.logs = logs
 
     def add_endpoint(self, endpoint):
         self.endpoints.append(endpoint)
@@ -27,10 +26,9 @@ class RequestService():
                 response = requests.get(endpoint)
                 response_status_code = response.status_code
                 status_codes.append(response_status_code)
-                self.logs.info(endpoint + " --- code response:" + str(response_status_code))
                 response.raise_for_status()
             except requests.HTTPError as e:
-                self.logs.general_error(e)
+                print(e)
             except requests.RequestException as e:
-                self.logs.general_error(e.args)
+                print(e.args)
         return status_codes
