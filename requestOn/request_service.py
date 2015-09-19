@@ -1,10 +1,19 @@
+import ast
 import requests
+
+
+def url(target):
+    return target['url']
 
 
 class RequestService():
 
     def __init__(self):
         self.endpoints = []
+
+    def add_endpoints(self, args):
+        for target in args.target_url:
+            self.endpoints.append(url(ast.literal_eval(target)))
 
     def read_endpoints_from_file(self, file):
         with open(file) as f:

@@ -1,6 +1,6 @@
 import random
 import unittest
-from requestOn.dashy import create_response_boolean_list
+from requestOn.dashy import create_response_boolean_list, map_to_dashy
 
 possible_responses = [200, 400, 401, 404, 405, 406, 500, 501, 502, 503, None, 0]
 boolean_responses = [True, False, False, False, False, False, False, False, False, False, False, False]
@@ -9,7 +9,7 @@ boolean_responses = [True, False, False, False, False, False, False, False, Fals
 class DashyTest(unittest.TestCase):
 
     def test_responses_should_be_transformed_to_boolean(self):
-        response_list = generate_response_list(10)
+        response_list = generate_response_list(length=10)
         response_boolean_list = create_response_boolean_list(response_list)
         for response in response_boolean_list:
             self.assertTrue(type(response) is bool)
@@ -24,6 +24,16 @@ class DashyTest(unittest.TestCase):
         expected_responses = boolean_responses
         response_boolean_list = create_response_boolean_list(response_list)
         self.assertListEqual(expected_responses, response_boolean_list)
+
+    def test_map_to_dashy(self):
+        app_name = 'REQUEST'
+        boolean_response = True
+        expected_map = {"request[name]": app_name,
+                        "request[success]": boolean_response,
+                        "request[meta][environment]": "test"}
+
+        actual_map = map_to_dashy(app_name=app_name, value=boolean_response)
+        self.assertDictEqual(expected_map, actual_map)
 
 
 def think_in_a_number(max_number):
