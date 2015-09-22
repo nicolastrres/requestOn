@@ -1,29 +1,24 @@
-import ast
 import requests
-
-
-def url(target):
-    return target['url']
 
 
 class RequestService():
 
     def __init__(self):
-        self.endpoints = []
+        # services [{'app': 'Facebook', 'url': 'https://facebook.com', 'status': '200'}]
+        self.services = []
 
-    def add_endpoints(self, args):
-        for target in args.target_url:
-            self.endpoints.append(url(ast.literal_eval(target)))
+    def add_service(self, url):
+        self.services.append({'url': url})
 
-    def read_endpoints_from_file(self, file):
+    def read_service_from_file(self, file):
         with open(file) as f:
-            self.endpoints = f.readlines()
+            self.services = f.readlines()
 
-    def call_endpoints(self):
+    def call_services(self):
         status_codes = []
-        for endpoint in self.endpoints:
+        for service in self.services:
             try:
-                response = requests.get(endpoint)
+                response = requests.get(service['url'])
                 response_status_code = response.status_code
                 status_codes.append(response_status_code)
                 response.raise_for_status()

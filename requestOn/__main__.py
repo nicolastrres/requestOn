@@ -1,3 +1,4 @@
+import ast
 import sys
 import argparse
 
@@ -12,7 +13,6 @@ def usage():
           "this will not be consider. Optional")
     # print("-f --file                  - file with endpoints to read and to be requested. Optional")
     # print("-a --appid                 - Appid in dashy. Optional")
-    # print("\n\nExamples:\n requestOn -t http://www.google.com")
     print("\n\nExamples:\n requestOn -t \"{'url': 'https://google.com', time: 300}\""
           " \"{'url': 'https://facebook.com', time: 100}\"\n\n")
     sys.exit(0)
@@ -43,8 +43,11 @@ def main():
     args = parse_args()
 
     if args.target_url:
-        request_service.add_endpoints(args)
-        status_codes = request_service.call_endpoints()
+        for target in args.target_url:
+            url = ast.literal_eval(target)['url']
+            request_service.add_service(url)
+
+        status_codes = request_service.call_services()
         call_dashy(status_codes=status_codes)
 
     # elif args.file_to_read:
