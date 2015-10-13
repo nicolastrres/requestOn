@@ -13,8 +13,8 @@ def usage():
           "this will not be consider. Optional")
     # print("-f --file                  - file with endpoints to read and to be requested. Optional")
     # print("-a --appid                 - Appid in dashy. Optional")
-    print("\n\nExamples:\n requestOn -t \"{'url': 'https://google.com', time: 300}\""
-          " \"{'url': 'https://facebook.com', time: 100}\"\n\n")
+    print("\n\nExamples:\n requestOn -t \"[{'url': 'https://google.com', 'time': 300}, \""
+          " \"{'url': 'https://facebook.com', 'time': 100}]\"\n\n")
     sys.exit(0)
 
 
@@ -41,11 +41,10 @@ def main():
     if not len(sys.argv[1:]):
         usage()
     args = parse_args()
-
     if args.target_url:
-        for target in args.target_url:
-            url = ast.literal_eval(target)['url']
-            request_service.add_service(url)
+        targets = ast.literal_eval(args.target_url[0])
+        for target in targets:
+            request_service.add_service(target['url'])
 
         status_codes = request_service.call_services()
         call_dashy(status_codes=status_codes)
@@ -54,7 +53,7 @@ def main():
     #     request_service.read_endpoints_from_file(args.file_to_read)
     #     status_codes = request_service.call_endpoints()
     #     call_dashy(status_codes=status_codes, args=args)
-    print(status_codes)
+        print(status_codes)
 
 
 def call_dashy(status_codes):
