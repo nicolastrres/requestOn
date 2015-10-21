@@ -4,21 +4,17 @@ import requests
 class RequestService():
 
     def __init__(self):
-        # services [{'app': 'Facebook', 'url': 'https://facebook.com', 'status': '200'}]
-        self.services = []
+        self.endpoints = []
 
-    def add_service(self, url):
-        self.services.append({'url': url})
-
-    def read_service_from_file(self, file):
+    def read_endpoints_from_file(self, file):
         with open(file) as f:
-            self.services = f.readlines()
+            self.endpoints = f.readlines()
 
-    def call_services(self):
+    def call_endpoints(self):
         status_codes = []
-        for service in self.services:
+        for endpoint in self.endpoints:
             try:
-                response = requests.get(service['url'])
+                response = requests.get(endpoint)
                 response_status_code = response.status_code
                 status_codes.append(response_status_code)
                 response.raise_for_status()
