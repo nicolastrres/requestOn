@@ -1,6 +1,9 @@
 import random
 import unittest
-from requestOn.dashy import create_response_boolean_list, map_to_dashy
+from requestOn.api import API
+
+from requestOn.dashy import create_response_boolean_list, Dashy
+
 
 possible_responses = [200, 400, 401, 404, 405, 406, 500, 501, 502, 503, None, 0]
 boolean_responses = [True, False, False, False, False, False, False, False, False, False, False, False]
@@ -32,7 +35,10 @@ class DashyTest(unittest.TestCase):
                         "request[success]": boolean_response,
                         "request[meta][environment]": "test"}
 
-        actual_map = map_to_dashy(app_name=app_name, value=boolean_response)
+        api = API(api_name=app_name)
+        dashy = Dashy(api=api, status_codes=[200])
+
+        actual_map = dashy.create_value(success=boolean_response)
         self.assertDictEqual(expected_map, actual_map)
 
 
